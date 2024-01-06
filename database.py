@@ -1,0 +1,16 @@
+import sqlite3
+connect=sqlite3.Connection("Bus_Booking.db")
+con=connect.cursor()
+con.execute('Create Table Operator(Operator_ID int, Name varchar(25), Address varchar(50), email_ID varchar(25), Phone int, PRIMARY KEY(Operator_ID))')
+con.execute('Create Table Bus(Bus_ID int, Type varchar(20), Capacity int,Fare int, Route_ID int, Operator_ID int, PRIMARY KEY(Bus_ID), Foreign Key(Operator_ID) references Operator(Operator_ID))')
+con.execute('Create Table Route(Route_ID int, Station_ID int, stationName  varchar(25),PRIMARY KEY(Route_ID, Station_ID))')
+con.execute('Create Table Run(Bus_ID int, Date date, Seats_Available int, PRIMARY KEY(Bus_ID, Date))')
+con.execute('Create Table Booking_History(Transaction_ID int(18), Passenger_Name varchar(25), no_Of_Passengers int, PRIMARY KEY(Transaction_ID))')
+con.execute('Alter table route add column destinationName varchar(25)')
+con.execute('Alter table route add column destination_ID varchar(25)')
+con.execute('''Create Table Passenger_details(Passenger varchar(25), Seats int, Age int, Booking_ref int, travelDate date,
+Phone int, Fare int, Bus_details int, Booked_date date, Boarding_point varchar(25));''')
+con.execute('Alter table Passenger_details add column Gender varchar(10)')
+con.execute('Alter table Passenger_details add column passengerID int')
+connect.commit()
+connect.close()
