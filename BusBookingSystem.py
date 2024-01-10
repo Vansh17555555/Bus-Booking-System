@@ -4,7 +4,7 @@ import random
 import tkinter.ttk as ttk
 import sqlite3
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
 
 class BusBookingSystem(Tk):
     #Front Page of the System.\\Bus_for_project.png
@@ -86,16 +86,13 @@ class BusBookingSystem(Tk):
             return destinate.isalpha()
 
 
-
         def checkDate(datee):
-            current_year = datetime.now().year
-            date_pattern = fr'{current_year}-\d{2}-\d{2}'
-
-            if re.search(date_pattern, datee):
+            if re.fullmatch(r'\d{4}-\d{2}-\d{2}', datee) and datetime.today() <= datetime.strptime(datee, '%Y-%m-%d') <= datetime.today() + timedelta(days=365):
+                
                 return True
-            else:
-                return False
-        
+            
+            return False
+                
         def check_seat_mob_age(num):
             return num.isnumeric()
 
@@ -266,13 +263,13 @@ class BusBookingSystem(Tk):
                 else:
                     messagebox.showwarning('Invalid Entry',"Enter Details Properly")
         #to
-        Label(root,text="To:").grid(row=3,column=0)
+        Label(root,text="To:").grid(row=3,column=2)
         goingTo=Entry(root)
         goingTo.grid(row=3,column=1)
         tto=goingTo.get()
 
         #from
-        Label(root,text="From:").grid(row=3,column=2)
+        Label(root,text="From:").grid(row=3,column=0)
         destination=Entry(root)
         destination.grid(row=3,column=3)
         fromm=destination.get()
