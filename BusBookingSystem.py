@@ -1,6 +1,5 @@
 from tkinter import *
 from tkinter import messagebox
-
 import random
 import tkinter.ttk as ttk
 import sqlite3
@@ -11,7 +10,10 @@ class BusBookingSystem(Tk):
     #Front Page of the System.\\Bus_for_project.png
     def front_page():
         root=Tk()
-        w=root.winfo_screenwidth()
+        root.title("Bus booking system")
+        icon=PhotoImage(file="buslogo.png")
+        root.iconphoto(True,icon)
+        w=root.winfo_screenwidth() 
         h=root.winfo_screenheight()
         root.geometry('%dx%d+0+0'%(w,h))
         busImage=PhotoImage(file="Bus_for_project.png")
@@ -29,12 +31,9 @@ class BusBookingSystem(Tk):
         Label(root,text='Enter SPACE to continue',font='Arial 18 bold',fg="Blue",pady=20).pack()
         def close(x=0):
             root.destroy()
-            obj.Home_page()     
+            obj.Home_page()
         root.bind('<space>',close)
         root.mainloop()
-    
-    
-    
 
     def Admin_page():
         root = Tk()
@@ -129,6 +128,9 @@ class BusBookingSystem(Tk):
     #Home Page of the System
     def Home_page():
         root=Tk()
+        root.title("Bus booking system")
+        icon=PhotoImage(file="buslogo.png")
+        root.iconphoto(True,icon)
         w,h=root.winfo_screenwidth(),root.winfo_screenheight()
         root.geometry('%dx%d+0+0'%(w,h))
         img=PhotoImage(file='Bus_for_project.png')
@@ -155,10 +157,13 @@ class BusBookingSystem(Tk):
         b3=Button(root,text="Add Bus Details", font='Arial 15 bold',bg='orchid4',command=add_bus_details_page).grid(row=2,column=2,pady=h//15)
         b4=Button(root,text="For Admin Only",font='Arial 10 bold',fg="Red",command=Admin_page).grid(row=5,column=2)
         root.mainloop()
-
+    
     #Seating Booking Page of the System222
     def Seat_Booking_page():
         root=Tk()
+        root.title("Bus booking system")
+        icon=PhotoImage(file="buslogo.png")
+        root.iconphoto(True,icon)
         with sqlite3.connect('Bus_Booking.db') as con:
             cur=con.cursor()
         w,h=root.winfo_screenwidth(),root.winfo_screenheight()
@@ -188,7 +193,7 @@ class BusBookingSystem(Tk):
                 return True
 
             return False
-        
+                
         def check_seat_mob_age(num):
             return num.isnumeric()
 
@@ -390,6 +395,10 @@ class BusBookingSystem(Tk):
     #Booking Details
     def Booking_Details():
         root=Tk()
+        root.title("Bus booking system")
+        icon=PhotoImage(file="buslogo.png")
+        root.iconphoto(True,icon) 
+
         with sqlite3.connect('Bus_Booking.db') as con:
             cur=con.cursor()
         root.title("Bus Booking System")
@@ -496,6 +505,10 @@ class BusBookingSystem(Tk):
     #checking booking
     def Checking_booking():
         root=Tk()
+        root.title("Bus booking system")
+        icon=PhotoImage(file="buslogo.png")
+        root.iconphoto(True,icon)
+
         with sqlite3.connect('Bus_Booking.db') as con:
             cur=con.cursor()
         w,h=root.winfo_screenwidth(),root.winfo_screenheight()
@@ -611,6 +624,10 @@ class BusBookingSystem(Tk):
     #Adding new bus details page
     def Add_new_bus_details_page():
         root=Tk()
+        root.title("Bus booking system")
+        icon=PhotoImage(file="buslogo.png")
+        root.iconphoto(True,icon)
+
         w,h=root.winfo_screenwidth(),root.winfo_screenheight()
         root.geometry('%dx%d+0+0'%(w,h))
 
@@ -650,6 +667,10 @@ class BusBookingSystem(Tk):
     #Adding new operator
     def New_Operator():
         root=Tk()
+        root.title("Bus booking system")
+        icon=PhotoImage(file="buslogo.png")
+        root.iconphoto(True,icon)
+
         with sqlite3.connect('Bus_Booking.db') as con:
             cur=con.cursor()
         w,h=root.winfo_screenwidth(),root.winfo_screenheight()
@@ -782,6 +803,9 @@ class BusBookingSystem(Tk):
     #Adding New Bus
     def New_Bus():
         root=Tk()
+        root.title("Bus booking system")
+        icon=PhotoImage(file="buslogo.png")
+        root.iconphoto(True,icon)
         with sqlite3.connect('Bus_Booking.db') as con:
             cur=con.cursor()
         w,h=root.winfo_screenwidth(),root.winfo_screenheight()
@@ -894,6 +918,10 @@ class BusBookingSystem(Tk):
     #Adding New Route
     def New_Route():
         root=Tk()
+        root.title("Bus booking system")
+        icon=PhotoImage(file="buslogo.png")
+        root.iconphoto(True,icon)
+         
         with sqlite3.connect('Bus_Booking.db') as con:
             cur=con.cursor()
         w,h=root.winfo_screenwidth(),root.winfo_screenheight()
@@ -1023,6 +1051,10 @@ class BusBookingSystem(Tk):
     #Adding New Run
     def New_Run():
         root=Tk()
+        root.title("Bus booking system")
+        icon=PhotoImage(file="buslogo.png")
+        root.iconphoto(True,icon)
+
         with sqlite3.connect('Bus_Booking.db') as con:
             cur=con.cursor()
         w,h=root.winfo_screenwidth(),root.winfo_screenheight()
@@ -1074,7 +1106,8 @@ class BusBookingSystem(Tk):
             Label(root,text=runningDate.get(),font='Arial 13').grid(row=6,column=6)
             Label(root,text='Seat Availability: ',font='Arial 13').grid(row=6,column=7)
             Label(root,text=seatAvail.get(),font='Arial 13').grid(row=6,column=8)
-            
+
+
         #Bus ID
         Label(root,text='Bus ID',font='Arial 13').grid(row=3,column=2,pady=h/20)
         busid=Entry(root)
