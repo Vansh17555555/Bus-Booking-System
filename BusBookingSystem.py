@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
+
 import random
 import tkinter.ttk as ttk
 import sqlite3
@@ -28,9 +29,102 @@ class BusBookingSystem(Tk):
         Label(root,text='Enter SPACE to continue',font='Arial 18 bold',fg="Blue",pady=20).pack()
         def close(x=0):
             root.destroy()
-            obj.Home_page()
+            obj.Home_page()     
         root.bind('<space>',close)
         root.mainloop()
+    
+    
+    
+
+    def Admin_page():
+        root = Tk()
+        root.title("Admin Page")
+        w,h=root.winfo_screenwidth(),root.winfo_screenheight()
+        root.geometry('%dx%d+0+0'%(w,h))
+        
+        
+        
+        # Create a centered box
+        box_width = 300
+        box_height = 200
+        x = (w - box_width) // 2
+        y = (h - box_height) // 2
+
+        admin_box = Toplevel(root)
+        admin_box.geometry(f'{box_width}x{box_height}+{x}+{y}')
+        admin_box.title("Authentication")
+
+         # Login form widgets
+        username_label = Label(admin_box, text="Username:")
+        username_label.pack(pady=5)
+        username_entry = Entry(admin_box)
+        username_entry.pack(pady=5)
+
+        password_label = Label(admin_box, text="Password:")
+        password_label.pack(pady=5)
+        password_entry = Entry(admin_box, show="*")
+        password_entry.pack(pady=5)
+
+
+        authenticated = False  
+
+        def authenticate():
+            nonlocal authenticated #using the variable created outside
+            # Replace this with your actual authentication logic
+            if username_entry.get() == "admin" and password_entry.get() == "password":
+                messagebox.showinfo("Login Successful", "Welcome, Admin!")
+                authenticated = True #setting this true
+                admin_box.destroy() # Close the admin box after successful login
+                content_admin_page() #displaying the content
+
+            else:
+                messagebox.showwarning("Login Failed", "Invalid username or password")
+
+        #binding ENTER key with lOGIN button
+        admin_box.bind("<Return>", lambda event=None: authenticate())
+
+        login_button = Button(admin_box, text="Login", command=authenticate)
+        login_button.pack(pady=10)
+
+        # Keep the admin_box above the admin page
+        admin_box.transient(root)
+        admin_box.grab_set()
+
+        #Close the window if the admin bx is closed without authenticating
+        def on_admin_box_close():
+             if not authenticated:
+                root.destroy()
+
+        admin_box.protocol("WM_DELETE_WINDOW", on_admin_box_close)
+
+
+        #content of the Admin Page
+        def content_admin_page():
+    
+            label = Label(root, text="Admin Page", fg="blue", font="Arial 20 bold", bg=root.cget("bg"))
+            label.place(relx=0.5, rely=0, anchor="n")
+            
+            #add content here
+            
+            
+
+
+            def on_close():
+                root.destroy()
+            root.protocol("WM_DELETE_WINDOW", on_close)
+            
+        
+        
+        
+        root.mainloop()
+
+    #admin Page End
+
+
+
+
+
+
 
     #Home Page of the System
     def Home_page():
@@ -52,11 +146,14 @@ class BusBookingSystem(Tk):
         def add_bus_details_page(z=0):
             root.destroy()
             obj.Add_new_bus_details_page()
+        def Admin_page(m=0):
+            root.destroy()
+            obj.Admin_page()
             #Buttons
         b1=Button(root,text="Seat Booking", font='Arial 15 bold',bg='orchid2',command=seat_booking_page).grid(row=2,column=0)
         b2=Button(root,text="Check Booked Seat", font='Arial 15 bold',bg='orchid3', command=check_booking_page).grid(row=2,column=1)
         b3=Button(root,text="Add Bus Details", font='Arial 15 bold',bg='orchid4',command=add_bus_details_page).grid(row=2,column=2,pady=h//15)
-        Label(root,text="For Admin Only",font='Arial 10 bold',fg="Red").grid(row=5,column=2)
+        b4=Button(root,text="For Admin Only",font='Arial 10 bold',fg="Red",command=Admin_page).grid(row=5,column=2)
         root.mainloop()
 
     #Seating Booking Page of the System222
@@ -85,14 +182,13 @@ class BusBookingSystem(Tk):
         def checkFrom(destinate):
             return destinate.isalpha()
 
-
         def checkDate(datee):
             if re.fullmatch(r'\d{4}-\d{2}-\d{2}', datee) and datetime.today() <= datetime.strptime(datee, '%Y-%m-%d') <= datetime.today() + timedelta(days=365):
-                
+
                 return True
-            
+
             return False
-                
+        
         def check_seat_mob_age(num):
             return num.isnumeric()
 
@@ -263,13 +359,13 @@ class BusBookingSystem(Tk):
                 else:
                     messagebox.showwarning('Invalid Entry',"Enter Details Properly")
         #to
-        Label(root,text="To:").grid(row=3,column=2)
+        Label(root,text="To:").grid(row=3,column=0)
         goingTo=Entry(root)
         goingTo.grid(row=3,column=1)
         tto=goingTo.get()
 
         #from
-        Label(root,text="From:").grid(row=3,column=0)
+        Label(root,text="From:").grid(row=3,column=2)
         destination=Entry(root)
         destination.grid(row=3,column=3)
         fromm=destination.get()
@@ -978,8 +1074,7 @@ class BusBookingSystem(Tk):
             Label(root,text=runningDate.get(),font='Arial 13').grid(row=6,column=6)
             Label(root,text='Seat Availability: ',font='Arial 13').grid(row=6,column=7)
             Label(root,text=seatAvail.get(),font='Arial 13').grid(row=6,column=8)
-
-
+            
         #Bus ID
         Label(root,text='Bus ID',font='Arial 13').grid(row=3,column=2,pady=h/20)
         busid=Entry(root)
