@@ -4,6 +4,8 @@ from tkinter import messagebox
 import random
 import tkinter.ttk as ttk
 import sqlite3
+import re
+from datetime import datetime, timedelta
 
 class BusBookingSystem(Tk):
     #Front Page of the System.\\Bus_for_project.png
@@ -181,24 +183,11 @@ class BusBookingSystem(Tk):
             return destinate.isalpha()
 
         def checkDate(datee):
-            s=[]
-            s=datee.split('-')
-            if len(s)==3:
-                if s[0].isnumeric() and s[1].isnumeric() and s[2].isnumeric():
-                    if (int)(s[2])>=1 and (int)(s[2])<=31:
-                        if (int)(s[1])>=1 and (int)(s[1])<=12:
-                            if len(s[0])==4:
-                                return True
-                            else:
-                                False
-                        else:
-                            False
-                    else:
-                        False
-                else:
-                    False
-            else:
-                False
+            if re.fullmatch(r'\d{4}-\d{2}-\d{2}', datee) and datetime.today() <= datetime.strptime(datee, '%Y-%m-%d') <= datetime.today() + timedelta(days=365):
+
+                return True
+
+            return False
         
         def check_seat_mob_age(num):
             return num.isnumeric()
